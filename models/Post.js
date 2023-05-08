@@ -13,6 +13,9 @@ const PostSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  imageUrl: {
+    type: String,
+  },
   writer: {
     type: String,
     required: true,
@@ -33,9 +36,6 @@ const PostSchema = mongoose.Schema({
   postHits : {
     type: Number,
     default: 0
-  },
-  imageInfo : {
-    type: Object,
   },
   comments: [
     {

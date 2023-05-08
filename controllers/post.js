@@ -2,12 +2,13 @@ const bcrypt = require("bcrypt");
 const Post = require("../models/Post.js");
 const Counter = require("../models/Counter.js");
 
+
 exports.HelloWorld = async (req, res) => {
   try {
     res.status(200).send(" Hello Node.js ");
   } catch (error) {
     console.log(error);
-  }
+  };
 };
 
 exports.getAllposts = async (req, res) => {
@@ -16,7 +17,7 @@ exports.getAllposts = async (req, res) => {
     res.status(200).json(allposts);
   } catch (error) {
     console.log(error);
-  }
+  };
 };
 
 exports.getBoard = async (req, res) => {
@@ -64,8 +65,7 @@ exports.writePost = async (req, res) => {
       timeZone: "Asia/Seoul",
     };
     const createdAt = date.toLocaleString("ko-KR", options);
-    const { title, content, writer, postPassword } = req.body;
-    const imageInfo = req.file;
+    const { title, content, imageUrl, writer, postPassword } = req.body;
     const { genre } = req.params;
     hashedPassword = await bcrypt.hash(postPassword, 10);
     const postCount = await Counter.findOneAndUpdate(
@@ -79,11 +79,11 @@ exports.writePost = async (req, res) => {
       genre,
       title,
       content,
+      imageUrl,
       writer,
       postPassword: hashedPassword,
       createdAt,
       postNumber,
-      imageInfo,
     });
     await post.save();
     return res.status(200).json({ success: true });
